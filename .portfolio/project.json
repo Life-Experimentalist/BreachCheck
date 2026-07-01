@@ -1,26 +1,30 @@
 {
 	"$schema": "https://vkrishna04.me/schemas/project-manifest.schema.json",
 	"manifestVersion": 2,
-	"tagline": "Check credentials against known breaches, privately.",
-	"summary": "A tool for checking whether credentials appear in known data breaches without disclosing what is being checked, using k-anonymity range queries so only a short hash prefix ever leaves the machine.",
-	"status": "complete",
+	"tagline": "Email and password breach lookup — Streamlit app and CLI",
+	"summary": "Checks whether an email address or password appears in known data breaches, from either a Streamlit web interface or a command-line interface. Password checks use Have I Been Pwned's k-anonymity range endpoint, so only a five-character SHA-1 prefix is sent and the suffix is matched locally. The two email lookups send the full address to the upstream service.",
+	"status": "archived",
 	"icon": "SiPython",
 	"readme": true,
 	"technologies": [
 		"Python",
+		"Streamlit",
 		"CLI"
 	],
 	"tags": [
 		"security",
 		"privacy",
 		"breach-detection",
-		"cli"
+		"cli",
+		"streamlit"
 	],
 	"highlights": [
-		"Uses a k-anonymity range query, so the full hash of a checked secret is never transmitted.",
-		"Runs locally as a CLI rather than as a web form that would see the credential."
+		"Password checks use Have I Been Pwned's k-anonymity range endpoint: only the first five characters of the SHA-1 hash leave the machine, and the suffix is matched locally.",
+		"A single entry point serves both a Streamlit web interface and an argparse CLI.",
+		"Documents per endpoint which lookups transmit the full email address, rather than claiming blanket privacy."
 	],
 	"links": {
-		"repo": "https://github.com/Life-Experimentalist/BreachCheck"
+		"repo": "https://github.com/Life-Experimentalist/BreachCheck",
+		"demo": "https://breachcheck-sagittarius.streamlit.app/"
 	}
 }
