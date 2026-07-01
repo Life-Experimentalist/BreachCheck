@@ -1,5 +1,8 @@
 # BreachCheck - Sagittarius
-<img src="https://socialify.git.ci/VKrishna04/BreachCheck/image?description=1&forks=1&issues=1&language=1&name=1&owner=1&pattern=Circuit%20Board&pulls=1&stargazers=1&theme=Auto" alt="BreachCheck" width="640" height="320" style="align-items: center" />
+
+> **This project is archived and no longer maintained.** It is kept as a public record of a completed team project; issues and pull requests are not monitored, and the code is not being updated.
+
+<img src="https://socialify.git.ci/Life-Experimentalist/BreachCheck/image?description=1&forks=1&issues=1&language=1&name=1&owner=1&pattern=Circuit%20Board&pulls=1&stargazers=1&theme=Auto" alt="BreachCheck" width="640" height="320" style="align-items: center" />
 ## Introduction
 
 We strongly advise users to only utilize BreachCheck for their own emails and passwords. Do not misuse this tool or exploit it for malicious purposes. Respect the privacy and security of others by refraining from attempting to check passwords that do not belong to you.
@@ -7,6 +10,20 @@ We strongly advise users to only utilize BreachCheck for their own emails and pa
 Our aim is to promote responsible and ethical use of BreachCheck to empower individuals in securing their online presence. By adhering to these principles, we can collectively contribute to a safer digital environment for everyone.
 
 You can experience the application [https://breachcheck-sagittarius.streamlit.app/](https://breachcheck-sagittarius.streamlit.app/) which is hosted on Streamlit Sharing Cloud.
+
+## What BreachCheck Sends
+
+BreachCheck queries three public APIs. What leaves your machine differs by check type, so it is stated here explicitly:
+
+| Check | Endpoint | What is transmitted |
+| --- | --- | --- |
+| Password | `api.pwnedpasswords.com/range/{prefix}` | Only the **first 5 characters** of the password's SHA-1 hash. The remaining suffix is compared locally, so neither the password nor its full hash is sent. |
+| Email | `leakcheck.io/api/public?check={email}` | The **full email address**, in the query string. |
+| Email | `api.xposedornot.com/v1/check-email/{email}` | The **full email address**, in the URL path. |
+
+The password check uses the Have I Been Pwned k-anonymity range model. The two email checks do not: the address you enter is sent in full to a third-party service.
+
+Note also that on the hosted Streamlit demo, whatever you type reaches the server rendering the app before any hashing happens. For the password check to be k-anonymous end to end, run the tool locally.
 
 ## Project Structure
 
@@ -17,7 +34,8 @@ BreachCheck/
 │   └── streamlit_app.py  # Main Streamlit application interface
 │
 ├── api/
-│   └── breach_api.py  # API integration for breach checks
+│   ├── email_apis.py  # Email lookups (LeakCheck, XposedOrNot)
+│   └── password_apis.py  # Password lookups (Have I Been Pwned range API)
 │
 ├── scripts/
 │   ├── run_app  # Extensionless script to detect OS and run the appropriate script
@@ -27,10 +45,9 @@ BreachCheck/
 │
 ├── docs/
 │   ├── faq_and_contributions.py  # Frequently Asked Questions and Contributions
-│   └── terms.md  # Terms and Conditions
+│   └── terms_and_conditions.py  # Terms and Conditions
 │
 ├── README.md  # Project documentation
-├── conf.json  # Configuration file for API keys and settings
 ├── requirements.txt  # Python dependencies
 ├── app.py  # Entry point to run the Streamlit application
 └── app_complete.py  # Entry point to run the Complete Streamlit application in a single file.
@@ -43,13 +60,13 @@ Note: This `app_complete.py` file is not used in the project and is a little beh
 
 ### Prerequisites
 
-Ensure you have Python 3.6 or later installed on your system.
+Ensure you have Python 3.8 or later installed on your system. (`streamlit==1.40.1` requires Python `>=3.8`, excluding 3.9.7.)
 
 ### Installation
 
 1. **Clone the repository:**
     ```bash
-    git clone https://github.com/VKrishna04/BreachCheck.git
+    git clone https://github.com/Life-Experimentalist/BreachCheck.git
     cd BreachCheck
     ```
 
@@ -63,7 +80,7 @@ Ensure you have Python 3.6 or later installed on your system.
     On Windows
     ```ps1
     python -m venv venv
-    source venv\Scripts\activate
+    venv\Scripts\activate
     ```
 
     On MacOS
@@ -88,7 +105,7 @@ To run the Streamlit application there are three ways:
 
 2. Using the batch file, use the following command:
     ```bash
-    .\run_app.bat
+    .\scripts\run_app.bat
     ```
 3. Using the shortcut file named "Sagittarius" in the root directory of the project. It is the name of the team which made this project.
 
