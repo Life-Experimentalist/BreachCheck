@@ -1,0 +1,27 @@
+{
+  "$schema": "https://devprune.vkrishna04.me/schemas/v1/devprune.schema.json",
+  "prunable": {
+    "directories": [
+      {
+        "path": "__pycache__",
+        "rebuild": "python -m compileall .",
+        "why": "CPython bytecode cache. Untracked, gitignored, and rewritten on the next import."
+      },
+      {
+        "path": "api/__pycache__",
+        "rebuild": "python -m compileall .",
+        "why": "CPython bytecode cache. Untracked, gitignored, and rewritten on the next import."
+      },
+      {
+        "path": "docs/__pycache__",
+        "rebuild": "python -m compileall .",
+        "why": "CPython bytecode cache. Untracked, gitignored, and rewritten on the next import."
+      },
+      {
+        "path": "Interfaces/__pycache__",
+        "rebuild": "python -m compileall .",
+        "why": "CPython bytecode cache. Untracked, gitignored, and rewritten on the next import."
+      }
+    ]
+  }
+}
